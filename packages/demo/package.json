@@ -1,0 +1,32 @@
+{
+  "name": "@electron-bvm/demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist-electron/index.js",
+  "module": "dist-electron/index.mjs",
+  "types": "dist-electron/types",
+  "scripts": {
+    "dev": "vite",
+    "test": "NODE_ENV=test npm run build && playwright test",
+    "build": "vue-tsc && vite build && tsc"
+  },
+  "files": [
+    "dist-electron"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^18.2.31",
+    "@types/react-dom": "^18.2.14",
+    "@vitejs/plugin-react-swc": "^3.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "vite": "^4.5.0",
+    "vite-plugin-electron": "^0.14.1",
+    "wouter": "^2.12.1"
+  },
+  "dependencies": {
+    "@electron-bvm/core": "workspace:^"
+  }
+}
