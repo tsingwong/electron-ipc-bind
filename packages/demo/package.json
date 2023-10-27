@@ -1,6 +1,6 @@
 {
   "name": "electron-bvm-demo",
-  "version": "0.0.2-beta.1",
+  "version": "0.0.2-beta.2",
   "private": true,
   "description": "",
   "main": "dist-electron/index.js",
@@ -11,7 +11,9 @@
     "test": "NODE_ENV=test npm run build && playwright test",
     "build": "vue-tsc && vite build && tsc"
   },
-  "files": ["dist-electron"],
+  "files": [
+    "dist-electron"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
