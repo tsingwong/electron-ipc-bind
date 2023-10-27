@@ -1,6 +1,6 @@
 {
   "name": "@electron-bvm/core",
-  "version": "0.0.1",
+  "version": "0.0.2-beta.1",
   "description": "",
   "sideEffects": false,
   "type": "module",
