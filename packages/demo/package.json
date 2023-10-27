@@ -1,6 +1,7 @@
 {
   "name": "@electron-bvm/demo",
   "version": "0.0.1",
+  "private": true,
   "description": "",
   "main": "dist-electron/index.js",
   "module": "dist-electron/index.mjs",
