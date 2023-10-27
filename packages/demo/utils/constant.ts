@@ -3,7 +3,7 @@
  * @Author: Tsingwong
  * @Date: 2023-10-25 11:19:29
  * @LastEditors: Tsingwong
- * @LastEditTime: 2023-10-25 17:39:54
+ * @LastEditTime: 2023-10-26 17:32:27
  */
 export const CUSTOM_CHANNEL = 'CUSTOM_CHANNEL'
 
@@ -29,4 +29,9 @@ export enum CHANNEL {
 export enum CUSTOM_CHANNEL_TYPE {
   CREATE_WINDOW = 0,
   CREATE_VIEW = 1,
+}
+
+export enum BVM_EVENT_NAME {
+  GET_ALL_POOL = 'GET_ALL_POOL',
+  SEND_MESSAGE_TO = 'SEND_MESSAGE_TO',
 }

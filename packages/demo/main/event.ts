@@ -3,13 +3,13 @@
  * @Author: Tsingwong
  * @Date: 2023-10-25 11:13:19
  * @LastEditors: Tsingwong
- * @LastEditTime: 2023-10-25 18:37:12
+ * @LastEditTime: 2023-10-27 14:34:27
  */
 
 import { join } from 'path'
-import { useEvents } from '@electron-bvm/core'
+import { useEvents, useWebContentPool } from '@electron-bvm/core'
 import { BrowserView, BrowserWindow, ipcMain } from 'electron'
-import { CUSTOM_CHANNEL, CUSTOM_CHANNEL_TYPE, WINDOW_NAME } from '../utils'
+import { BVM_EVENT_NAME, CUSTOM_CHANNEL, CUSTOM_CHANNEL_TYPE, WINDOW_NAME } from '../utils'
 
 export type WindowName = `${WINDOW_NAME}`
 
@@ -30,15 +30,15 @@ type ICustomChannelType = {
   windowInfo: WindowInfo
 }
 
-const events = useEvents('browser')
+export const events = useEvents('browser')
+
+const webContentPool = useWebContentPool()
 
 export const preloadPath = join(__dirname, './preload.js')
 
-ipcMain.handle(CUSTOM_CHANNEL, (_, payload: ICustomChannelType) => {
-  const {
-    type,
-    windowInfo: { name, url },
-  } = payload
+ipcMain.handle(CUSTOM_CHANNEL, (_, payload: WindowInfo) => {
+  const { type, name, url } = payload
+
   let winOrView: BrowserWindow | BrowserView | null = null
   switch (type) {
     case CUSTOM_CHANNEL_TYPE.CREATE_WINDOW:
@@ -59,10 +59,27 @@ ipcMain.handle(CUSTOM_CHANNEL, (_, payload: ICustomChannelType) => {
         },
       })
       winOrView.webContents.loadURL(url)
-      winOrView.webContents.openDevTools()
+      winOrView.webContents.openDevTools({ mode: 'detach' })
       events.addWebContent(name, winOrView.webContents)
       break
     default:
       break
   }
+
+  return winOrView?.webContents.id
+})
+
+// 主线程的监听
+
+events.handle('*', BVM_EVENT_NAME.GET_ALL_POOL, (...args: any[]) => {
+  return webContentPool.getAllNames()
+})
+
+events.on('*', BVM_EVENT_NAME.SEND_MESSAGE_TO, (...args: any[]) => {
+  console.log('主线程接收到同步方法，参数', args)
+})
+
+events.handle('*', BVM_EVENT_NAME.SEND_MESSAGE_TO, (...args: any[]) => {
+  console.log('主线程接收到异步方法，参数', args)
+  return '异步方法主线程返回数据'
 })

@@ -3,7 +3,7 @@
  * @Author: Tsingwong
  * @Date: 2023-10-23 16:41:15
  * @LastEditors: Tsingwong
- * @LastEditTime: 2023-10-25 11:37:29
+ * @LastEditTime: 2023-10-27 11:49:06
  */
 
 import { WebContents, ipcMain, ipcRenderer } from 'electron'
@@ -106,7 +106,15 @@ export class MainIpcEvent extends IpcBaseEvent {
 
         for (const eventName of eventNames) {
           const resEventName = this._getEventName(fromName, eventName)
+          console.log(
+            '🚀 ~ file: main.ts:109 ~ MainIpcEvent ~ _handleNormalEvent ~ resEventName:',
+            resEventName,
+          )
           const anyEventName = this._getEventName(ANY_WINDOW_SYMBOL, eventName)
+          console.log(
+            '🚀 ~ file: main.ts:111 ~ MainIpcEvent ~ _handleNormalEvent ~ anyEventName:',
+            anyEventName,
+          )
 
           this.eventMap.emit(resEventName, ...payload)
           this.eventMap.emit(anyEventName, ...payload)
@@ -115,13 +123,14 @@ export class MainIpcEvent extends IpcBaseEvent {
       }
 
       const toWebContent = webContentPool.get(toName)
+
       if (!toWebContent) {
         return
       }
 
       toWebContent.send(EVENT_CENTER, {
         fromName: fromName === toName ? SELF_NAME : fromName,
-        eventNames,
+        eventName: eventNames,
         payload,
       })
     }
@@ -152,7 +161,15 @@ export class MainIpcEvent extends IpcBaseEvent {
         const resFromName = fromName === toName ? SELF_NAME : fromName
         const resInArr = eventNames.map((eventName) => {
           const resEventName = this._getEventName(resFromName, eventName)
+          console.log(
+            '🚀 ~ file: main.ts:164 ~ MainIpcEvent ~ resInArr ~ resEventName:',
+            resEventName,
+          )
           const anyEventName = this._getEventName('*', eventName)
+          console.log(
+            '🚀 ~ file: main.ts:165 ~ MainIpcEvent ~ resInArr ~ anyEventName:',
+            anyEventName,
+          )
           const handler =
             this.responsiveEventMap.get(resEventName) || this.responsiveEventMap.get(anyEventName)
 
@@ -191,7 +208,6 @@ export class MainIpcEvent extends IpcBaseEvent {
           message: new Error(`Listen to the response of window ${toName} timeout`),
         })
       }, timeout)
-
       ipcMain.handleOnce(handlerName, (_, params: HandlerParams) => {
         const { code, message, payload: data } = params
         clearTimeout(tid)

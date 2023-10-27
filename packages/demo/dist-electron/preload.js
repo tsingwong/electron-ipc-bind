@@ -1041,6 +1041,9 @@ class IpcBaseEvent {
       },
       delete: (name) => {
         delete this.responsiveEventStore[name];
+      },
+      getAll: () => {
+        return Object.keys(this.responsiveEventStore);
       }
     });
   }
@@ -1069,6 +1072,7 @@ class IpcBaseEvent {
     if (isFunction(_eventName)) {
       _listener = _eventName;
       _eventName = _webContentName;
+      _webContentName = "";
     }
     if (isUndefined(_eventName)) {
       _eventName = _webContentName;
@@ -1280,7 +1284,15 @@ class MainIpcEvent extends IpcBaseEvent {
         }
         for (const eventName of eventNames) {
           const resEventName = this._getEventName(fromName, eventName);
+          console.log(
+            "🚀 ~ file: main.ts:109 ~ MainIpcEvent ~ _handleNormalEvent ~ resEventName:",
+            resEventName
+          );
           const anyEventName = this._getEventName(ANY_WINDOW_SYMBOL, eventName);
+          console.log(
+            "🚀 ~ file: main.ts:111 ~ MainIpcEvent ~ _handleNormalEvent ~ anyEventName:",
+            anyEventName
+          );
           this.eventMap.emit(resEventName, ...payload);
           this.eventMap.emit(anyEventName, ...payload);
         }
@@ -1292,7 +1304,7 @@ class MainIpcEvent extends IpcBaseEvent {
       }
       toWebContent.send(EVENT_CENTER, {
         fromName: fromName === toName ? SELF_NAME : fromName,
-        eventNames,
+        eventName: eventNames,
         payload
       });
     }
@@ -1315,7 +1327,15 @@ class MainIpcEvent extends IpcBaseEvent {
         const resFromName = fromName === toName ? SELF_NAME : fromName;
         const resInArr = eventNames.map((eventName) => {
           const resEventName = this._getEventName(resFromName, eventName);
+          console.log(
+            "🚀 ~ file: main.ts:164 ~ MainIpcEvent ~ resInArr ~ resEventName:",
+            resEventName
+          );
           const anyEventName = this._getEventName("*", eventName);
+          console.log(
+            "🚀 ~ file: main.ts:165 ~ MainIpcEvent ~ resInArr ~ anyEventName:",
+            anyEventName
+          );
           const handler = this.responsiveEventMap.get(resEventName) || this.responsiveEventMap.get(anyEventName);
           if (!isFunction(handler)) {
             return Promise.reject(
@@ -1510,6 +1530,12 @@ class RendererIpcEvent extends IpcBaseEvent {
    * @return {*}
    */
   emitTo(webContentName, eventName, ...args) {
+    console.log(
+      "🚀 ~ file: renderer.ts:101 ~ RendererIpcEvent ~ emitTo ~ webContentName:",
+      webContentName,
+      eventName,
+      args
+    );
     electron.ipcRenderer.invoke(EVENT_CENTER$1, {
       type: EventType.NORMAL,
       toName: webContentName,
@@ -1566,7 +1592,7 @@ const CUSTOM_CHANNEL = "CUSTOM_CHANNEL";
 const events = useEvents();
 electron.contextBridge.exposeInMainWorld("electronAPI", {
   events,
-  createBrowserWindowOrView(windowInfo) {
+  createWindowOrView(windowInfo) {
     return electron.ipcRenderer.invoke(CUSTOM_CHANNEL, windowInfo);
   }
 });

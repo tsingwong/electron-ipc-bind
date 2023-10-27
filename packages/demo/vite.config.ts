@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react-swc'
  * @Author: Tsingwong
  * @Date: 2023-10-25 09:52:52
  * @LastEditors: Tsingwong
- * @LastEditTime: 2023-10-26 11:00:47
+ * @LastEditTime: 2023-10-26 11:18:28
  */
 import { defineConfig } from 'vite'
 import electron, { ElectronOptions } from 'vite-plugin-electron'
@@ -28,6 +28,13 @@ export default defineConfig(({ command }) => {
             entry: './main/index.ts',
             vite: {
               resolve: {},
+              build: {
+                rollupOptions: {
+                  external: ['electron', '@electron-bvm/core'],
+                  outDir: 'dist-electron',
+                  minify: false,
+                },
+              },
             },
           },
           {

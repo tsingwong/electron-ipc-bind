@@ -3,7 +3,7 @@
  * @Author: Tsingwong
  * @Date: 2023-10-23 16:41:11
  * @LastEditors: Tsingwong
- * @LastEditTime: 2023-10-24 19:55:15
+ * @LastEditTime: 2023-10-26 18:12:47
  */
 
 import EventEmitter from 'events'
@@ -32,6 +32,9 @@ export class IpcBaseEvent {
     },
     delete: (name: string) => {
       delete this.responsiveEventStore[name]
+    },
+    getAll: () => {
+      return Object.keys(this.responsiveEventStore)
     },
   }
 
@@ -79,6 +82,7 @@ export class IpcBaseEvent {
     if (isFunction(_eventName)) {
       _listener = _eventName
       _eventName = _webContentName
+      _webContentName = ''
     }
     if (isUndefined(_eventName)) {
       _eventName = _webContentName
