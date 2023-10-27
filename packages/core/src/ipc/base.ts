@@ -3,11 +3,12 @@
  * @Author: Tsingwong
  * @Date: 2023-10-23 16:41:11
  * @LastEditors: Tsingwong
- * @LastEditTime: 2023-10-26 18:12:47
+ * @LastEditTime: 2023-10-27 17:03:07
  */
 
 import EventEmitter from 'events'
 import { isArray, isEmpty, isFunction, isUndefined, noop } from 'lodash-es'
+import { AnyFunction, IStringOrStrings } from '../typings'
 import { ErrorCode, SELF_NAME } from '../utils'
 
 interface INormalizeArgs {

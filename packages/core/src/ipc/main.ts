@@ -3,13 +3,14 @@
  * @Author: Tsingwong
  * @Date: 2023-10-23 16:41:15
  * @LastEditors: Tsingwong
- * @LastEditTime: 2023-10-27 11:49:06
+ * @LastEditTime: 2023-10-27 17:03:55
  */
 
 import { WebContents, ipcMain, ipcRenderer } from 'electron'
 import { isArray, isFunction, isString } from 'lodash-es'
 import { v4 as uuidV4 } from 'uuid'
 import { webContentPool } from '../base'
+import { IStringOrStrings } from '../typings'
 import { ANY_WINDOW_SYMBOL, ErrorCode, MAIN_EVENT_NAME, SELF_NAME } from '../utils'
 import { IpcBaseEvent } from './base'
 
