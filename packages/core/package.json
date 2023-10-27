@@ -1,9 +1,13 @@
 {
   "name": "electron-bvm",
-  "version": "0.0.2-beta.2",
+  "version": "0.0.2-beta.3",
   "description": "",
   "sideEffects": false,
   "type": "module",
+  "files": [
+    "dist",
+    "typings"
+  ],
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
