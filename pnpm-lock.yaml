@@ -34,8 +34,8 @@ importers:
         specifier: ^9.2.0
         version: 9.2.0
       electron:
-        specifier: ^25.9.3
-        version: 25.9.3
+        specifier: ^27.0.2
+        version: 27.0.2
       lint-staged:
         specifier: ^15.0.2
         version: 15.0.2
@@ -59,7 +59,7 @@ importers:
 
   packages/demo:
     dependencies:
-      'electron-bvm':
+      electron-bvm:
         specifier: workspace:^
         version: link:../core
     devDependencies:
@@ -1046,8 +1046,8 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
 
-  /electron@25.9.3:
-    resolution: {integrity: sha512-dacaHg/PuwVcFRgPDCM5j7UDzqGJWOsbBRdS5wPKLNS/ejPeccIjuNUT1cqcrpvCJKAFW8swHWg9kdizNSEDHQ==}
+  /electron@27.0.2:
+    resolution: {integrity: sha512-4fbcHQ40ZDlqhr5Pamm+M5BF7ry2lGqjFTWTJ/mrBwuiPWu6xhV/RWgUhKBaLqKNfAaNl3eMxV3Jc82gv6JauQ==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
