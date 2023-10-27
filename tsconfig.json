@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/node18/tsconfig.json",
-  "include": ["typings", "packages", "*.ts"],
+  "include": ["packages", "*.ts"],
   "ts-node": {
     "transpileOnly": true,
     "files": true,
