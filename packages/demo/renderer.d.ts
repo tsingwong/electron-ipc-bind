@@ -6,7 +6,7 @@
  * @LastEditTime: 2023-10-25 17:31:45
  */
 
-import { type RendererIpcEvent } from '@electron-bvm/core'
+import { type RendererIpcEvent } from 'electron-bvm'
 import { WindowInfo } from './main/event'
 
 export interface IElectronAPI {

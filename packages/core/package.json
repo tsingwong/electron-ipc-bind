@@ -1,5 +1,5 @@
 {
-  "name": "@electron-bvm/core",
+  "name": "electron-bvm",
   "version": "0.0.2-beta.1",
   "description": "",
   "sideEffects": false,
@@ -19,6 +19,9 @@
     "start": "nodemon --exec ts-node --experimentalSpecifierResolution node src/index.ts --project ./tsconfig.json",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   },
   "keywords": [],
   "author": "",

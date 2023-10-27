@@ -59,7 +59,7 @@ importers:
 
   packages/demo:
     dependencies:
-      '@electron-bvm/core':
+      'electron-bvm':
         specifier: workspace:^
         version: link:../core
     devDependencies:

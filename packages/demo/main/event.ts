@@ -7,8 +7,8 @@
  */
 
 import { join } from 'path'
-import { useEvents, useWebContentPool } from '@electron-bvm/core'
 import { BrowserView, BrowserWindow, ipcMain } from 'electron'
+import { useEvents, useWebContentPool } from 'electron-bvm'
 import { BVM_EVENT_NAME, CUSTOM_CHANNEL, CUSTOM_CHANNEL_TYPE, WINDOW_NAME } from '../utils'
 
 export type WindowName = `${WINDOW_NAME}`

@@ -30,7 +30,7 @@ export default defineConfig(({ command }) => {
               resolve: {},
               build: {
                 rollupOptions: {
-                  external: ['electron', '@electron-bvm/core'],
+                  external: ['electron', 'electron-bvm'],
                   outDir: 'dist-electron',
                   minify: false,
                 },
