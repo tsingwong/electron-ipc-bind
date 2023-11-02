@@ -967,6 +967,7 @@ class WebContentPool {
     __publicField(this, "pool", /* @__PURE__ */ new Map());
     //
     __publicField(this, "webContentIdMap", /* @__PURE__ */ new Map());
+    console.log("=============, create WebContentPool");
   }
   add(name, webContent) {
     if (this.pool.has(name)) {
@@ -1054,6 +1055,11 @@ class IpcBaseEvent {
       listener
     );
     this._on(webContentNames, eventNames, callback, false);
+    console.log(
+      "🚀 ~ file: base.ts:55 ~ IpcBaseEvent ~ webContentNames, eventNames:",
+      webContentNames,
+      eventNames
+    );
     return this;
   }
   once(windowName, eventName, listener) {
@@ -1096,6 +1102,10 @@ class IpcBaseEvent {
   _on(windowNames, eventNames, listener, once = false) {
     this._each(windowNames, eventNames, (windowName, eventName) => {
       const resEventName = this._getEventName(windowName, eventName);
+      console.log(
+        "🚀 ~ file: base.ts:123 ~ IpcBaseEvent ~ this._each ~ resEventName:",
+        resEventName
+      );
       if (once) {
         this.eventMap.once(resEventName, listener);
       } else {
@@ -1239,6 +1249,7 @@ class MainIpcEvent extends IpcBaseEvent {
         return;
       }
       const webContentName = webContentPool.getName(webContent.id);
+      console.log("webContentName", webContentName);
       if (!webContentName) {
         return;
       }
@@ -1276,6 +1287,7 @@ class MainIpcEvent extends IpcBaseEvent {
    * @return {*}
    */
   _handleNormalEvent(fromName, toNames, params) {
+    console.log("🚀 ~ file: main.ts:101 ~ MainIpcEvent ~ _handleNormalEvent ~ toNames:", toNames);
     let { eventName: eventNames, payload } = params;
     for (const toName of toNames) {
       if (toName === MAIN_EVENT_NAME) {
@@ -1293,14 +1305,22 @@ class MainIpcEvent extends IpcBaseEvent {
             "🚀 ~ file: main.ts:111 ~ MainIpcEvent ~ _handleNormalEvent ~ anyEventName:",
             anyEventName
           );
+          console.log(
+            "🚀 ~ file: main.ts:122 ~ MainIpcEvent ~ _handleNormalEvent ~ eventNames:",
+            this.eventMap.eventNames()
+          );
           this.eventMap.emit(resEventName, ...payload);
           this.eventMap.emit(anyEventName, ...payload);
         }
-        return;
+        continue;
       }
       const toWebContent = webContentPool.get(toName);
+      console.log(
+        "🚀 ~ file: main.ts:132 ~ MainIpcEvent ~ _handleNormalEvent ~ toWebContent:",
+        toName
+      );
       if (!toWebContent) {
-        return;
+        continue;
       }
       toWebContent.send(EVENT_CENTER, {
         fromName: fromName === toName ? SELF_NAME : fromName,
@@ -1420,7 +1440,7 @@ class MainIpcEvent extends IpcBaseEvent {
     for (const webContentName2 of _webContentNames) {
       const toWebContent = webContentPool.get(webContentName2);
       if (!toWebContent) {
-        return;
+        continue;
       }
       toWebContent.send(EVENT_CENTER, {
         type: "NORMAL",
@@ -1481,7 +1501,16 @@ class RendererIpcEvent extends IpcBaseEvent {
       if (type === EventType.NORMAL) {
         for (const eventName of eventNames) {
           const resEventName = this._getEventName(fromName, eventName);
+          console.log(
+            "🚀 ~ file: renderer.ts:43 ~ RendererIpcEvent ~ ipcRenderer.on ~ resEventName:",
+            resEventName
+          );
           const anyEventName = this._getEventName(ANY_WINDOW_SYMBOL, eventName);
+          console.log(
+            "🚀 ~ file: renderer.ts:44 ~ RendererIpcEvent ~ ipcRenderer.on ~ anyEventName:",
+            anyEventName
+          );
+          console.log(this.eventMap.eventNames());
           this.eventMap.emit(resEventName, ...payload);
           this.eventMap.emit(anyEventName, ...payload);
         }
@@ -1492,8 +1521,17 @@ class RendererIpcEvent extends IpcBaseEvent {
       }
       const resArr = eventNames.map(async (eventName) => {
         const resEventName = this._getEventName(fromName, eventName);
+        console.log(
+          "🚀 ~ file: renderer.ts:65 ~ RendererIpcEvent ~ resArr ~ resEventName:",
+          resEventName
+        );
         const anyEventName = this._getEventName("*", eventName);
+        console.log(
+          "🚀 ~ file: renderer.ts:67 ~ RendererIpcEvent ~ resArr ~ anyEventName:",
+          anyEventName
+        );
         const handler = this.responsiveEventMap.get(resEventName) || this.responsiveEventMap.get(anyEventName);
+        console.log("🚀 ~ file: renderer.ts:71 ~ RendererIpcEvent ~ resArr ~ handler:", handler);
         if (!isFunction(handler)) {
           return Promise.reject({
             code: ErrorCode.NOT_FOUND,

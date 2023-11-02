@@ -1,5 +1,5 @@
 {
-  "name": "electron-bvm-demo",
+  "name": "electron-ipc-bind-demo",
   "version": "0.0.2-beta.5",
   "private": true,
   "description": "",
@@ -11,9 +11,7 @@
     "test": "NODE_ENV=test npm run build && playwright test",
     "build": "vue-tsc && vite build && tsc"
   },
-  "files": [
-    "dist-electron"
-  ],
+  "files": ["dist-electron"],
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -29,6 +27,6 @@
     "wouter": "^2.12.1"
   },
   "dependencies": {
-    "electron-bvm": "workspace:^"
+    "electron-ipc-bind": "workspace:^"
   }
 }

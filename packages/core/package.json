@@ -1,13 +1,10 @@
 {
-  "name": "electron-bvm",
+  "name": "electron-ipc-bind",
   "version": "0.0.2-beta.5",
   "description": "",
   "sideEffects": false,
   "type": "module",
-  "files": [
-    "dist",
-    "typings"
-  ],
+  "files": ["dist", "typings"],
   "exports": {
     ".": {
       "require": "./dist/index.cjs",

@@ -3,7 +3,7 @@
  * @Author: Tsingwong
  * @Date: 2023-10-24 10:02:22
  * @LastEditors: Tsingwong
- * @LastEditTime: 2023-10-24 18:53:41
+ * @LastEditTime: 2023-11-02 16:53:01
  */
 
 import { type BrowserView, type BrowserWindow, type WebContents } from 'electron'

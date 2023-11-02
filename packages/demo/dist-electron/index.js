@@ -1,7 +1,7 @@
 "use strict";
 const path = require("path");
 const electron = require("electron");
-const electronBvm = require("electron-bvm");
+const electronBvm = require("electron-ipc-bind");
 const token = "%[a-f0-9]{2}";
 const singleMatcher = new RegExp("(" + token + ")|([^%]+?)", "gi");
 const multiMatcher = new RegExp("(" + token + ")+", "gi");

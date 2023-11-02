@@ -3,7 +3,7 @@
  * @Author: Tsingwong
  * @Date: 2023-10-23 16:41:15
  * @LastEditors: Tsingwong
- * @LastEditTime: 2023-10-27 17:03:55
+ * @LastEditTime: 2023-11-02 16:51:45
  */
 
 import { WebContents, ipcMain, ipcRenderer } from 'electron'
@@ -107,26 +107,17 @@ export class MainIpcEvent extends IpcBaseEvent {
 
         for (const eventName of eventNames) {
           const resEventName = this._getEventName(fromName, eventName)
-          console.log(
-            '🚀 ~ file: main.ts:109 ~ MainIpcEvent ~ _handleNormalEvent ~ resEventName:',
-            resEventName,
-          )
           const anyEventName = this._getEventName(ANY_WINDOW_SYMBOL, eventName)
-          console.log(
-            '🚀 ~ file: main.ts:111 ~ MainIpcEvent ~ _handleNormalEvent ~ anyEventName:',
-            anyEventName,
-          )
-
           this.eventMap.emit(resEventName, ...payload)
           this.eventMap.emit(anyEventName, ...payload)
         }
-        return
+        continue
       }
 
       const toWebContent = webContentPool.get(toName)
 
       if (!toWebContent) {
-        return
+        continue
       }
 
       toWebContent.send(EVENT_CENTER, {
@@ -162,18 +153,9 @@ export class MainIpcEvent extends IpcBaseEvent {
         const resFromName = fromName === toName ? SELF_NAME : fromName
         const resInArr = eventNames.map((eventName) => {
           const resEventName = this._getEventName(resFromName, eventName)
-          console.log(
-            '🚀 ~ file: main.ts:164 ~ MainIpcEvent ~ resInArr ~ resEventName:',
-            resEventName,
-          )
           const anyEventName = this._getEventName('*', eventName)
-          console.log(
-            '🚀 ~ file: main.ts:165 ~ MainIpcEvent ~ resInArr ~ anyEventName:',
-            anyEventName,
-          )
           const handler =
             this.responsiveEventMap.get(resEventName) || this.responsiveEventMap.get(anyEventName)
-
           if (!isFunction(handler)) {
             return Promise.reject(
               new Error(
@@ -267,7 +249,7 @@ export class MainIpcEvent extends IpcBaseEvent {
     for (const webContentName of _webContentNames) {
       const toWebContent = webContentPool.get(webContentName)
       if (!toWebContent) {
-        return
+        continue
       }
 
       toWebContent.send(EVENT_CENTER, {

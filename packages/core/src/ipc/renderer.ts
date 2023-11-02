@@ -3,7 +3,7 @@
  * @Author: Tsingwong
  * @Date: 2023-10-23 16:41:15
  * @LastEditors: Tsingwong
- * @LastEditTime: 2023-10-27 11:24:11
+ * @LastEditTime: 2023-11-02 16:53:14
  */
 
 import { ipcRenderer } from 'electron'
@@ -57,7 +57,6 @@ export class RendererIpcEvent extends IpcBaseEvent {
 
         const handler =
           this.responsiveEventMap.get(resEventName) || this.responsiveEventMap.get(anyEventName)
-
         if (!isFunction(handler)) {
           return Promise.reject({
             code: ErrorCode.NOT_FOUND,
@@ -98,13 +97,6 @@ export class RendererIpcEvent extends IpcBaseEvent {
    * @return {*}
    */
   emitTo(webContentName: string | string[], eventName: string | string[], ...args: any[]) {
-    console.log(
-      '🚀 ~ file: renderer.ts:101 ~ RendererIpcEvent ~ emitTo ~ webContentName:',
-      webContentName,
-      eventName,
-      args,
-    )
-
     ipcRenderer.invoke(EVENT_CENTER, {
       type: EventType.NORMAL,
       toName: webContentName,

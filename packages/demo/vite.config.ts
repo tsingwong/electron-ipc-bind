@@ -30,7 +30,7 @@ export default defineConfig(({ command }) => {
               resolve: {},
               build: {
                 rollupOptions: {
-                  external: ['electron', 'electron-bvm'],
+                  external: ['electron', 'electron-ipc-bind'],
                   outDir: 'dist-electron',
                   minify: false,
                 },

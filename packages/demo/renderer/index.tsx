@@ -29,6 +29,7 @@ function Index() {
 
   const sendMessageTo = (webContentName: string | string[]) => {
     window.electronAPI.events.emitTo(webContentName, BVM_EVENT_NAME.SEND_MESSAGE_TO, 123)
+    console.log(`window.electronAPI.events.emitTo(${webContentName}, ${BVM_EVENT_NAME.SEND_MESSAGE_TO}, 123`)
   }
 
   const sendAsyncMessageTo = async (webContentName: string | string[]) => {

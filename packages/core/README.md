@@ -1,6 +1,6 @@
-# [electron-bvm]
+# [electron-ipc-bind]
 
-[![NPM version](https://img.shields.io/npm/v/electron-bvm?color=a1b858&label=)](https://www.npmjs.com/package/electron-bvm)
+[![NPM version](https://img.shields.io/npm/v/electron-ipc-bind?color=a1b858&label=)](https://www.npmjs.com/package/electron-ipc-bind)
 
 ## Feature
 
