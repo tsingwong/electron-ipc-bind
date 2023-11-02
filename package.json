@@ -1,6 +1,6 @@
 {
   "name": "electron-ipc-bind-project",
-  "version": "0.0.2-beta.5",
+  "version": "0.0.2-beta.6",
   "description": "",
   "private": true,
   "keywords": [],
@@ -12,7 +12,9 @@
   },
   "bugs": "https://github.com/tsingwong/electron-ipc-bind/issues",
   "license": "MIT",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "pnpm -r --filter=electron-ipc-bind-demo run dev",
     "build": "pnpm -r --filter=electron-ipc-bind run build",
