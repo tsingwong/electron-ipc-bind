@@ -3,7 +3,7 @@
  * @Author: Tsingwong
  * @Date: 2023-10-23 16:41:11
  * @LastEditors: Tsingwong
- * @LastEditTime: 2023-11-02 16:51:31
+ * @LastEditTime: 2024-06-07 13:24:38
  */
 
 import EventEmitter from 'events'
@@ -83,11 +83,11 @@ export class IpcBaseEvent {
     if (isFunction(_eventName)) {
       _listener = _eventName
       _eventName = _webContentName
-      _webContentName = ''
+      _webContentName = '*'
     }
     if (isUndefined(_eventName)) {
       _eventName = _webContentName
-      _webContentName = ''
+      _webContentName = '*'
     }
     if (!isArray(_webContentName)) {
       _webContentName = [_webContentName]
@@ -98,7 +98,7 @@ export class IpcBaseEvent {
     }
 
     if (isEmpty(_webContentName)) {
-      _webContentName = ['']
+      _webContentName = ['*']
     }
     return {
       webContentNames: _webContentName,
@@ -183,8 +183,11 @@ export class IpcBaseEvent {
   protected _off(windowNames: string[], eventNames: string[], listener: AnyFunction): this {
     this._each(windowNames, eventNames, (windowName, eventName) => {
       const resEventName = this._getEventName(windowName, eventName)
-
-      this.eventMap.off(resEventName, listener)
+      if (noop === listener) {
+        this.eventMap.removeAllListeners(resEventName)
+      } else {
+        this.eventMap.off(resEventName, listener)
+      }
     })
     return this
   }

@@ -1,7 +1,7 @@
 "use strict";
 const path = require("path");
 const electron = require("electron");
-const electronBvm = require("electron-ipc-bind");
+const electronIpcBind = require("electron-ipc-bind");
 const token = "%[a-f0-9]{2}";
 const singleMatcher = new RegExp("(" + token + ")|([^%]+?)", "gi");
 const multiMatcher = new RegExp("(" + token + ")+", "gi");
@@ -514,8 +514,8 @@ var BVM_EVENT_NAME = /* @__PURE__ */ ((BVM_EVENT_NAME2) => {
   BVM_EVENT_NAME2["SEND_MESSAGE_TO"] = "SEND_MESSAGE_TO";
   return BVM_EVENT_NAME2;
 })(BVM_EVENT_NAME || {});
-const events = electronBvm.useEvents("browser");
-const webContentPool = electronBvm.useWebContentPool();
+const events = electronIpcBind.useEvents("browser");
+const webContentPool = electronIpcBind.useWebContentPool();
 const preloadPath = path.join(__dirname, "./preload.js");
 electron.ipcMain.handle(CUSTOM_CHANNEL, (_, payload) => {
   const { type, name, url: url2 } = payload;
